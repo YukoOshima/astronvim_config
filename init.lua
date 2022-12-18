@@ -233,6 +233,27 @@ local config = {
                                 event = "VimEnter",
                                 config = function() require("ofirkai").setup {} end,
                         },
+                        {
+                                "nvim-neorg/neorg",
+                                run = ":Neorg sync-parsers", -- This is the important bit!
+                                config = function()
+                                        require("neorg").setup {
+                                                -- Tell Neorg what modules to load
+                                                load = {
+                                                        ["core.defaults"] = {}, -- Load all the default modules
+                                                        ["core.norg.concealer"] = {}, -- Allows for use of icons
+                                                        ["core.norg.dirman"] = {
+                                                                -- Manage your directories with Neorg
+                                                                config = {
+                                                                        workspaces = {
+                                                                                my_workspace = "~/neorg",
+                                                                        },
+                                                                },
+                                                        },
+                                                },
+                                        }
+                                end,
+                        },
                         -- You can disable default plugins as follows:
                         -- ["goolord/alpha-nvim"] = { disable = true },
 
@@ -272,6 +293,7 @@ local config = {
                 end,
                 treesitter = { -- overrides `require("treesitter").setup(...)`
                         ensure_installed = "all",
+                        indent = { enable = true },
                 },
                 -- use mason-lspconfig to configure LSP installations
                 ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
@@ -358,7 +380,6 @@ local config = {
                 o.smartindent = true
                 o.tabstop = 2
                 o.shiftwidth = 2
-                local wo = vim.wo
         end,
 }
 
